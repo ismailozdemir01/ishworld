@@ -1,70 +1,70 @@
 # THE ISHWORLD — Installation Guide
 
-## v7.1.5
+## v8.0.0
 
-This guide covers deployment of the validated public distribution.
+This guide covers the validated public distribution.
 
 ## Windows x64 — recommended
 
-1. Open the `v7.1.5` release in the public repository.
-2. Download `ISHWORLD-7.1.5-Windows-x64-Setup.exe`.
+1. Open the `v8.0.0` release in the public repository.
+2. Download `ISHWORLD-8.0.0-Windows-x64-Setup.exe`.
 3. Verify its SHA-256 hash against `SHA256SUMS.txt`.
 4. Run the installer and complete the installation.
-5. Launch ISHWORLD from the installed application entry or the installed executable.
-6. When the application is no longer required, use the normal Windows uninstall entry.
+5. Launch ISHWORLD from the installed application entry or executable.
+6. Use the normal Windows uninstall mechanism when removing the application.
 
-The v7.1.5 release pipeline explicitly validates executable startup, installer operation and uninstall cleanup.
+The v8.0.0 release pipeline validates native executable startup, installer operation, installed executable startup and uninstall cleanup.
 
 ### Portable Windows executable
 
-`ISHWORLD-7.1.5-Windows-x64.exe` can be used when an installer-based deployment is not desired. Download it from the release, verify its SHA-256 hash, and launch it directly.
+`ISHWORLD-8.0.0-Windows-x64.exe` is available for portable/manual operation. Download it from the release, verify its SHA-256 hash, and launch it directly.
 
 ## Linux x64
 
-1. Download `ISHWORLD-7.1.5-linux-x64` from the v7.1.5 release.
-2. Verify its SHA-256 hash against `SHA256SUMS.txt`.
+1. Download `ISHWORLD-8.0.0-linux-x64` from the v8.0.0 release.
+2. Verify its SHA-256 hash against the published manifest.
 3. Grant execute permission:
 
 ```bash
-chmod +x ISHWORLD-7.1.5-linux-x64
+chmod +x ISHWORLD-8.0.0-linux-x64
 ```
 
 4. Start it:
 
 ```bash
-./ISHWORLD-7.1.5-linux-x64
+./ISHWORLD-8.0.0-linux-x64
 ```
 
-The validated Linux build includes an application health smoke test in the release pipeline.
+The v8.0.0 Linux build is smoke-tested by the release pipeline.
 
 ## Verification
-
-The release contains a SHA-256 manifest. Do not treat a download as trusted solely because the filename is correct; compare the locally calculated hash with the published manifest.
 
 ### Windows PowerShell
 
 ```powershell
-Get-FileHash .\ISHWORLD-7.1.5-Windows-x64-Setup.exe -Algorithm SHA256
+Get-FileHash .\ISHWORLD-8.0.0-Windows-x64-Setup.exe -Algorithm SHA256
 ```
 
 ### Linux
 
 ```bash
-sha256sum ISHWORLD-7.1.5-linux-x64
+sha256sum ISHWORLD-8.0.0-linux-x64
 ```
 
-## Network and configuration
+Compare the result with `SHA256SUMS.txt` from the release.
 
-The runtime is designed to operate locally and does not require an external API service for its core local control surface. The documented default local control surface is `127.0.0.1:8765` when running the Python/runtime form.
+## Distribution boundary
 
-Do not expose a local control surface to an untrusted network without an explicitly configured deployment boundary and appropriate network controls.
+The public repository is intentionally source-free. The proprietary Enterprise source, private integrations, internal build material, signing credentials and secrets remain outside the public distribution.
+
+GitHub automatically provides source-archive links for public release tags. Those archives contain the public distribution commit only; they do not expose the private Enterprise source.
 
 ## Production data rule
 
-ISHWORLD does not silently manufacture production world data. Missing production configuration or content is represented explicitly as `NOT_CONFIGURED` or a domain error rather than substituted with fabricated assets or state.
+ISHWORLD does not silently manufacture production world data or assets. Missing production configuration/content is reported explicitly as `NOT_CONFIGURED`, `UNKNOWN`, `UNAVAILABLE` or a domain error.
 
 ## Troubleshooting
 
-- If the application does not start, first verify that the downloaded file's SHA-256 matches the release manifest.
-- If a required production asset or world configuration is missing, inspect the reported `NOT_CONFIGURED` or domain error instead of expecting automatic fake content.
-- For a clean Windows reinstall, uninstall the existing installation before installing a new version.
+- If the application does not start, verify the downloaded file's SHA-256 hash first.
+- If required production content is missing, inspect the reported configuration/domain status instead of expecting fabricated substitutes.
+- For a clean Windows reinstall, uninstall the existing installation before installing the new release.
